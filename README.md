@@ -10,3 +10,7 @@ Sistema de agendamento e gestão de atendimentos para clínicas de pequeno porte
 - Agendamento de consultas
 - Remarcação de consultas
 - Cancelamento de consultas
+
+## Iteração 2
+
+Nesta etapa, foram realizadas pequenas modificações para exercício de branch e merge.
