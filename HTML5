@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeMed Agenda</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">+</div>
+      <div>
+        <h1>SafeMed Agenda</h1>
+        <p>Sistema acadêmico de agendamento para clínicas de pequeno porte</p>
+      </div>
+    </div>
+
+    <div class="user-box">
+      <span>Usuário: recepcionista</span>
+      <button id="btnLimparDados" class="btn btn-danger-outline">Limpar dados</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <button class="menu-btn active" data-target="dashboard">Dashboard</button>
+      <button class="menu-btn" data-target="pacientes">Pacientes</button>
+      <button class="menu-btn" data-target="profissionais">Profissionais</button>
+      <button class="menu-btn" data-target="agenda">Agenda</button>
+      <button class="menu-btn" data-target="consultas">Consultas</button>
+    </aside>
+
+    <section class="content">
+      <section id="dashboard" class="page active">
+        <h2>Dashboard</h2>
+        <p class="subtitle">Resumo geral da aplicação SafeMed Agenda.</p>
+
+        <div class="cards">
+          <div class="metric-card">
+            <span>Pacientes</span>
+            <strong id="totalPacientes">0</strong>
+          </div>
+
+          <div class="metric-card">
+            <span>Profissionais</span>
+            <strong id="totalProfissionais">0</strong>
+          </div>
+
+          <div class="metric-card">
+            <span>Consultas agendadas</span>
+            <strong id="totalAgendadas">0</strong>
+          </div>
+
+          <div class="metric-card">
+            <span>Consultas canceladas</span>
+            <strong id="totalCanceladas">0</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Objetivo do sistema</h3>
+          <p>
+            O SafeMed Agenda permite cadastrar pacientes, cadastrar profissionais,
+            consultar a agenda, agendar consultas, remarcar consultas e cancelar atendimentos.
+          </p>
+        </div>
+      </section>
+
+      <section id="pacientes" class="page">
+        <h2>Cadastro de Paciente</h2>
+        <p class="subtitle">Preencha os dados obrigatórios para registrar um novo paciente.</p>
+
+        <div class="card">
+          <form id="formPaciente">
+            <div class="form-grid">
+              <label>
+                Nome completo *
+                <input type="text" id="pacienteNome" placeholder="Digite o nome completo" required />
+              </label>
+
+              <label>
+                Telefone *
+                <input type="text" id="pacienteTelefone" placeholder="(00) 00000-0000" required />
+              </label>
+
+              <label>
+                Data de nascimento *
+                <input type="date" id="pacienteNascimento" required />
+              </label>
+
+              <label>
+                E-mail
+                <input type="email" id="pacienteEmail" placeholder="Digite o e-mail" />
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="reset" class="btn btn-secondary">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Paciente</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Pacientes cadastrados</h3>
+          <div id="listaPacientes" class="list"></div>
+        </div>
+      </section>
+
+      <section id="profissionais" class="page">
+        <h2>Cadastro de Profissional</h2>
+        <p class="subtitle">Cadastre os profissionais responsáveis pelos atendimentos.</p>
+
+        <div class="card">
+          <form id="formProfissional">
+            <div class="form-grid">
+              <label>
+                Nome completo *
+                <input type="text" id="profissionalNome" placeholder="Digite o nome completo" required />
+              </label>
+
+              <label>
+                Especialidade *
+                <input type="text" id="profissionalEspecialidade" placeholder="Ex.: Clínica Geral" required />
+              </label>
+
+              <label>
+                CRM / Registro
+                <input type="text" id="profissionalRegistro" placeholder="Digite o número do registro" />
+              </label>
+
+              <label>
+                Telefone
+                <input type="text" id="profissionalTelefone" placeholder="(00) 00000-0000" />
+              </label>
+
+              <label>
+                Horário inicial *
+                <input type="time" id="profissionalInicio" required />
+              </label>
+
+              <label>
+                Horário final *
+                <input type="time" id="profissionalFim" required />
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="reset" class="btn btn-secondary">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Salvar Profissional</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Profissionais cadastrados</h3>
+          <div id="listaProfissionais" class="list"></div>
+        </div>
+      </section>
+
+      <section id="agenda" class="page">
+        <h2>Consulta da Agenda</h2>
+        <p class="subtitle">Selecione um profissional e uma data para visualizar os horários.</p>
+
+        <div class="card">
+          <form id="formFiltroAgenda">
+            <div class="form-grid agenda-grid">
+              <label>
+                Profissional *
+                <select id="agendaProfissional" required></select>
+              </label>
+
+              <label>
+                Data *
+                <input type="date" id="agendaData" required />
+              </label>
+
+              <button type="submit" class="btn btn-primary">Consultar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Horários da agenda</h3>
+          <div id="resultadoAgenda" class="agenda-list">
+            Informe o profissional e a data para consultar a agenda.
+          </div>
+        </div>
+      </section>
+
+      <section id="consultas" class="page">
+        <h2>Agendamento de Consulta</h2>
+        <p class="subtitle">Cadastre, remarque ou cancele consultas da clínica.</p>
+
+        <div class="card">
+          <form id="formConsulta">
+            <input type="hidden" id="consultaId" />
+
+            <div class="form-grid">
+              <label>
+                Paciente *
+                <select id="consultaPaciente" required></select>
+              </label>
+
+              <label>
+                Profissional *
+                <select id="consultaProfissional" required></select>
+              </label>
+
+              <label>
+                Data *
+                <input type="date" id="consultaData" required />
+              </label>
+
+              <label>
+                Horário *
+                <input type="time" id="consultaHorario" required />
+              </label>
+
+              <label>
+                Tipo de consulta
+                <select id="consultaTipo">
+                  <option value="Consulta inicial">Consulta inicial</option>
+                  <option value="Retorno">Retorno</option>
+                  <option value="Exame">Exame</option>
+                  <option value="Avaliação">Avaliação</option>
+                </select>
+              </label>
+
+              <label>
+                Observações
+                <input type="text" id="consultaObservacoes" placeholder="Informações adicionais" />
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="btnCancelarEdicao" class="btn btn-secondary">Cancelar</button>
+              <button type="submit" id="btnSalvarConsulta" class="btn btn-primary">
+                Confirmar Agendamento
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3>Consultas cadastradas</h3>
+            <input type="date" id="filtroConsultasData" />
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Profissional</th>
+                  <th>Data</th>
+                  <th>Horário</th>
+                  <th>Tipo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaConsultas"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
